@@ -10,7 +10,7 @@ const db = mysql.createConnection({
   host: "localhost",
   user: "root",
   password: "",
-  database: "pharmacy_invetory",
+  database: "pharmacy_inventory",
 });
 
 app.post("/create", (req, res) => {
@@ -18,11 +18,12 @@ console.log("Request Body: ", req.body);
   const id=req.body.id;
   const product = req.body.product;
   const amount = req.body.amount;
-  const price = req.body.price;
+  const purchasePrice = req.body.purchasePrice;
+  const salePrice = req.body.salePrice;
 
   db.query(
-    "INSERT INTO inventario (Product, Amount, PurchasePrice, SalePrice) VALUES (?,?,?)",
-    [product, amount, price],
+    "INSERT INTO inventory (Product, Amount, PurchasePrice, SalePrice) VALUES (?,?,?,?)",
+    [product, amount, purchasePrice, salePrice],
 
     (err, result) => {
       if (err) {
@@ -36,8 +37,8 @@ console.log("Request Body: ", req.body);
      );
 });
 
-app.get("/productos_inventario", (req, res) => {
-       db.query("SELECT * FROM productos_inventario", 
+app.get("/pharmacy_inventory", (req, res) => {
+       db.query("SELECT * FROM inventory", 
       (err, result) => {
         if (err) {
           console.log(err);
@@ -53,11 +54,12 @@ app.put("/update", (req, res) => {
     const id=req.body.id;
     const product = req.body.product;
     const amount = req.body.amount;
-    const price = req.body.price;
+    const purchasePrice = req.body.purchasePrice;
+    const salePrice=req.body.salePrice;
   
     db.query(
-      "UPDATE productos_inventario SET Product=?, Amount=?, Price=? WHERE id=?" ,
-      [product, amount, price, id],
+      "UPDATE inventory SET Product=?, Amount=?, PurchasePrice=?, SalePrice=? WHERE id=?"
+      [product, amount, purchasePrice, salePrice, id],
   
       (err, result) => {
         if (err) {
@@ -75,7 +77,7 @@ app.put("/update", (req, res) => {
     const id=req.params.id;
     
     db.query(
-      "DELETE FROM productos_inventario WHERE id=?",id,
+      "DELETE FROM inventory WHERE id=?",id,
   
       (err, result) => {
         if (err) {

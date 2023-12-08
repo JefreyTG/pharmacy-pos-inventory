@@ -14,27 +14,27 @@ const db = mysql.createConnection({
 });
 
 app.post("/create", (req, res) => {
-console.log("Request Body: ", req.body);
-  const id=req.body.id;
+  console.log("Request Body: ", req.body);
+  const id = req.body.id;
   const product = req.body.product;
   const amount = req.body.amount;
-  const purchasePrice = req.body.purchasePrice;
-  const salePrice = req.body.salePrice;
+  const cost = req.body.cost;
+  const salePrice = req.body.salePrice
+  
 
   db.query(
-    "INSERT INTO inventory (Product, Amount, PurchasePrice, SalePrice) VALUES (?,?,?,?)",
-    [product, amount, purchasePrice, salePrice],
-
+    "INSERT INTO inventory ( Product, Amount, Cost, SalePrice) VALUES (?, ?, ?, ?)",
+    [ product, amount, cost, salePrice],
     (err, result) => {
       if (err) {
         console.log("Error", err);
-          res.status(500).send("Error al añadir el producto");
-        } else {
-          console.log("Insert successful");
-          res.send(result);
-        }        
+        res.status(500).send("Error al añadir el producto");
+      } else {
+        console.log("Insert successful");
+        res.send(result);
       }
-     );
+    }
+  );
 });
 
 app.get("/pharmacy_inventory", (req, res) => {
@@ -51,45 +51,46 @@ app.get("/pharmacy_inventory", (req, res) => {
 }); 
 
 app.put("/update", (req, res) => {
-    const id=req.body.id;
-    const product = req.body.product;
-    const amount = req.body.amount;
-    const purchasePrice = req.body.purchasePrice;
-    const salePrice=req.body.salePrice;
+  const id = req.body.id;
+  const product = req.body.product;
+  const amount = req.body.amount;
+  const cost = req.body.cost;
+  const salePrice = req.body.salePrice;
   
-    db.query(
-      "UPDATE inventory SET Product=?, Amount=?, PurchasePrice=?, SalePrice=? WHERE id=?"
-      [product, amount, purchasePrice, salePrice, id],
-  
-      (err, result) => {
-        if (err) {
-          console.log("Error", err);
-            res.status(500).send("Error al añadir el producto");
-          } else {
-            console.log("Insert successful");
-            res.send(result);
-          }        
-        }
-       );
-  });
 
-  app.delete("/delete/:id", (req, res) => {
-    const id=req.params.id;
-    
-    db.query(
-      "DELETE FROM inventory WHERE id=?",id,
-  
-      (err, result) => {
-        if (err) {
-          console.log("Error", err);
-            res.status(500).send("Error al eliminar el producto");
-          } else {
-            console.log("Insert successful");
-            res.send(result);
-          }        
-        }
-       );
-  });
+  db.query(
+    "UPDATE inventory SET Product=?, Amount=?, Cost=?, SalePrice=? WHERE Id=?",
+    [product, amount, cost, salePrice, id ],
+    (err, result) => {
+      if (err) {
+        console.log("Error", err);
+        res.status(500).send("Error al actualizar el producto");
+      } else {
+        console.log("Update successful");
+        res.send(result);
+      }
+    }
+  );
+});
+
+app.delete("/delete/:id}", (req, res) => {
+  const id = req.params.id;
+
+  db.query(
+    "DELETE FROM inventory WHERE Id=?",
+    [id],
+    (err, result) => {
+      if (err) {
+        console.log("Error", err);
+        res.status(500).send("Error al eliminar el producto");
+      } else {
+        console.log("Delete successful");
+        res.send(result);
+      }
+    }
+  );
+});
+
 
 
       

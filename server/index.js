@@ -51,7 +51,7 @@ app.get("/pharmacy_inventory", (req, res) => {
 }); 
 
 app.put("/update", (req, res) => {
-  const id = req.body.id;
+   const id = req.body.id;
   const product = req.body.product;
   const amount = req.body.amount;
   const cost = req.body.cost;
@@ -73,12 +73,12 @@ app.put("/update", (req, res) => {
   );
 });
 
-app.delete("/delete/:id}", (req, res) => {
-  const id = req.params.id;
-
+app.delete("/delete/:id", (req, res) => {
+  const id= req.params.id;
+  
   db.query(
-    "DELETE FROM inventory WHERE Id=?",
-    [id],
+    "DELETE FROM `pharmacy_inventory`.`inventory` WHERE  Id=?", [id],
+    
     (err, result) => {
       if (err) {
         console.log("Error", err);
@@ -90,9 +90,6 @@ app.delete("/delete/:id}", (req, res) => {
     }
   );
 });
-
-
-
       
   
 app.listen(3001, () => {

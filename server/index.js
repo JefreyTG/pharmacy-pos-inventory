@@ -26,14 +26,51 @@ function getInventory(callback) {
 }
 
 app.get("/pharmacy_inventory", (req, res) => {
+  const searchTerm = req.query.search || '';
+
   getInventory((err, result) => {
     if (err) {
       res.status(500).send("Error al obtener el inventario");
     } else {
-      res.send(result);
+      const filteredResults = result.filter(product => product.Product.toLowerCase().includes(searchTerm.toLowerCase()));
+      res.send(filteredResults);
     }
   });
 });
+
+
+app.post("/create", (req, res) => {
+  const { product, amount, cost, salePrice } = req.body;
+
+  // Verifica que se proporcionen los datos necesarios
+  if (!product || !amount || !cost || !salePrice) {
+    return res.status(400).json({ error: "Se requieren todos los campos para crear un nuevo producto" });
+  }
+
+  // Realiza la inserción del nuevo producto en la base de datos
+  db.query(
+    "INSERT INTO inventory (Product, Amount, Cost, SalePrice) VALUES (?, ?, ?, ?)",
+    [product, amount, cost, salePrice],
+    (err, result) => {
+      if (err) {
+        console.error("Error al crear un nuevo producto:", err);
+        return res.status(500).json({ error: "Error al crear un nuevo producto" });
+      }
+
+      // Después de la creación exitosa, devuelve el nuevo inventario
+      getInventory((inventoryErr, inventoryResult) => {
+        if (inventoryErr) {
+          return res.status(500).json({ error: "Error al obtener el inventario después de la creación" });
+        }
+
+        res.status(200).json(inventoryResult);
+      });
+    }
+  );
+});
+
+// ...
+
 
 app.post("/sell", (req, res) => {
   const product = req.body.product;

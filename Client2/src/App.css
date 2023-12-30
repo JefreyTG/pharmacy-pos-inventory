@@ -1,0 +1,166 @@
+:root {
+  --light-blue: #bbe4e9;
+  --mid-blue: #79c2d0;
+  --dark-blue: #53a8b6;
+  --light-gray: #142d4c;
+  --light-green: #9fd3c7;
+}
+
+#root {
+  width: 100%;
+  height: fit-content;
+  padding: 10px;
+  background-color: var(--light-gray);
+  display: flex;
+  align-items: flex-end;
+}
+
+.container {
+  width: 100%;
+  max-width: 900px; /* Añadido un ancho máximo para dispositivos más grandes */
+  height: 1200px;
+  margin: 10px auto; /* Centrado y margen ajustado */
+  background-color: var(--light-gray);
+}
+
+h1,
+h2,
+h3 {
+  width: 100%;
+  max-width: 800px; /* Añadido un ancho máximo para dispositivos más grandes */
+  margin: 0 auto;
+  text-align: center; /* Centrado */
+}
+
+header h1 {
+  font-family: "Playfair Display", serif;
+  font-size: 4rem;
+  font-weight: 700;
+  border-radius: 10px;
+  background: linear-gradient(var(--dark-blue), var(--darker-blue));
+  color: var(--light-blue);
+  padding: 20px;
+  text-shadow: 2px 2px 4px #34495e;
+  margin-bottom: 5px;
+}
+
+.search-products h2, .shopping-cart h2, .pos-container h2 {
+  font: 300 33px "Playfair Display", serif;
+  color: var(--light-green);
+  background: linear-gradient(var(--dark-blue), var(--darker-blue));
+  border-radius: 10px;
+  margin-bottom: 5px;
+  margin: 0;
+}
+
+h3 {
+  max-width: 600px; /* Añadido un ancho máximo para dispositivos más grandes */
+}
+
+.container .card-header {
+  text-align: center;
+  font: 300 50px "Playfair Display", serif;
+  color: var(--light-green);
+  background: var(--dark-blue);
+  border-radius: 10px;
+  margin-bottom: 5px;
+}
+
+.card-text-center {
+  color: var(--dark-blue);
+}
+
+.card-body,
+.card-footer.text-muted {
+  background-color: var(--mid-blue);
+}
+
+.card-body .input-group-text {
+  background-color: var(--light-green);
+  font: 550 16px "Playfair Display", serif;
+  color: var(--dark-blue);
+}
+
+button.cart-btn {
+  width: fit-content;
+  font-size: small;
+  font-family: "Playfair Display", Arial, sans-serif;
+  text-align: center;
+  border-radius: 10px;
+}
+
+button.btn-success,
+button.btn.btn-info,
+button.btn.btn-danger {
+  font: 550 15px "Playfair Display", serif;
+  border-color: var(--light-green);
+}
+
+button.btn-success,
+button.btn.btn-info {
+  background-color: var(--light-green);
+  color: var(--dark-blue);
+}
+
+button.btn-success:hover {
+  background-color: var(--light-gray);
+  color: var(--light-green);
+}
+
+button.btn-danger {
+  width: 100%;
+  background-color: red;
+}
+
+.table {
+  width: 100%;
+  table-layout: fixed;
+  border-collapse: collapse;
+  margin-top: 5px;
+  justify-content: center;
+  font-family: "Playfair Display", serif;
+}
+
+.table th,
+.table td {
+  padding: 10px;
+}
+
+.table thead th {
+  background-color: var(--light-green);
+  color: var(--dark-blue);
+  font-size: 1rem;
+  font-weight: 600;
+  border: 1px solid #ddd;
+}
+
+.td-buttons {
+  text-align: center;
+  font: 600 17px "Playfair Display", serif;
+  border: 1px solid #dddddd;
+}
+
+/* Resto del CSS permanece igual */
+
+@media screen and (max-width: 768px) {
+  .container .card-header {
+    font-size: 24px;
+  }
+
+  .table thead th {
+    font-size: 16px;
+  }
+
+  .td-buttons {
+    font-size: 14px;
+    padding: 8px;
+  }
+
+  button.btn-edit,
+  button.btn-delete {
+    padding: 6px 12px;
+    font-size: 14px;
+  }
+}
+
+

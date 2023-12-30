@@ -1,0 +1,83 @@
+:root {
+  --light-blue: #bbe4e9;
+  --mid-blue: #79c2d0;
+  --dark-blue: #53a8b6;
+  --darker-blue: #142d4c;
+  --light-green: #9fd3c7;
+}
+
+.landing-page {
+  width: 100%;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+header {
+  width: 100%;
+  max-width: 800px;
+  align-items: center;
+  align-content: center;
+  margin-top: 0%;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 15px;
+}
+
+p {
+  width: 100%;
+  max-width: 800px;
+  font-family: "Playfair Display", serif;
+  font-size: 25px;
+  font-weight: 300;
+  background-color: var(--light-blue);
+  color: var(--darker-blue);
+  padding: 10px;
+  margin: 10px auto;
+  border-radius: 10px;
+}
+
+input {
+  width: 100%;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+  border-radius: 10px;
+}
+
+li {
+  font-family: "Playfair Display", serif;
+  font-size: 20px;
+  font-weight: 300;
+  box-sizing: border-box;
+  border-radius: 10px;
+  margin: 0;
+  background-color: var(--light-green);
+  color: var(--darker-blue);
+}
+
+ul {
+  font-family: "Playfair Display", serif;
+  padding-left: 0%;
+  border-radius: 10px;
+}
+
+label {
+  font-family: "Playfair Display", serif;
+}
+
+section {
+  padding: 20px;
+}
+
+footer {
+  margin-top: 20px;
+  background-color: #333;
+  color: #fff;
+  padding: 10px;
+}
+
+
+/* Comentario descriptivo opcional */
+/* Sección de Estilos para el Landing Page */
+

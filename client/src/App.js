@@ -4,67 +4,12 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Axios from "axios";
 import Swal from 'sweetalert2'
 import "bootstrap/dist/css/bootstrap.min.css";
-import POS from "./components/POS";
 import LandingPage from "./components/LandingPage";
 import Inventory from "./components/Inventory"
 import Sale from "./components/Sale"
 
 
-function ProductForm({ product, amount, cost,  onChangeProduct, onChangeAmount, onChangeCost, onSubmit }) {
-  const salePrice = parseFloat(cost) * 1.4;
-  return (
-    <div className="input-group mb-3">
-      <span className="input-group-text" id="basic-addon1">
-        Producto:
-      </span>
-      <input 
-        type="text"
-        value={product}
-        onChange={onChangeProduct}
-        className="form-control"
-        placeholder="Nombre del producto"
-        aria-label="Username"
-        aria-describedby="basic-addon1"
-        />
-
-        <span className="input-group-text" id="basic-addon1">
-          Cantidad:
-        </span>
-        <input 
-        type="number"
-        value={amount}
-        onChange={onChangeAmount}
-        className="form-control"
-        placeholder="Cantidad"
-        aria-label="Username"
-        aria-describedby="basic-addon1"
-        />
-        <span className="inpu-group-text" id="basic-addon1">
-          Costo:
-        </span>
-        <input
-        type="number"
-        value={cost}
-        onChange={onChangeCost}              
-        className="form-control"
-        placeholder="Ingrese el valor de compra"
-        aria-label="Username"
-        aria-describedby="basic-addon1"
-      />
-      <span className="input-group-text" id="basic-addon1">
-        Precio sugerido de venta: ${salePrice}
-      </span>
-
-      <button className="btn btn-success" onClick={onSubmit}>
-        Añadir Producto al Inventario
-      </button>
-
-    </div>
-  );
-}
-
 function App() {
-  const [cart, setCart] = useState([]);
   const [id, setId] = useState("");
   const [product, setProduct] = useState("");
   const [amount, setAmount] = useState(0);
@@ -92,41 +37,7 @@ function App() {
 
   const salePrice = parseFloat(cost) * 1.4;
 
-  const addOrUpdateProduct= async ()=>{
-    const salePrice=parseFloat(cost) * 1.4;
-    
-    try{
-      if(edit){
-        await Axios.put(`${API_BASE_URL}/update`, {id, product, amount, cost, salePrice });
-        Swal.fire({
-          title:'<strong>Product Updated!!</strong>',
-          html: `<i> El Producto <strong>${product}</strong> se actualizó con exito!</i>`,
-          icon: 'success',
-          timer: 3000,
-        });
-      } else {
-        await Axios.post(`${API_BASE_URL}/create`, { id, product, amount, cost, salePrice });
-        Swal.fire({
-          title: '<strong>Producto Añadido!!</strong>',
-          html: `<i> El Producto <strong>${product}</strong> se añadió con éxito al inventario</i>`,
-          icon: 'success',
-          timer: 3000,
-        });
-       }
-       if (amount < 5) {
-        Swal.fire({
-          title: '¡Alerta!',
-          text: `La cantidad de ${product} es menor a 5 unidades. Considere reponer el stock.`,
-          icon: 'warning',
-          timer: 6000,
-        });
-      }
-      clearFields();
-      getProducts();
-    } catch (error){
-      console.error('Error during the process of:', error)
-    }
-  };
+
   const getProducts=async()=>{
     try {
       const response= await Axios.get(`${API_BASE_URL}/pharmacy_inventory`);
@@ -144,7 +55,7 @@ function App() {
 };
 
   const ProductRow = ({ val, editProduct, deleteProduct }) => {
-    const salePrice = parseFloat(cost) * 1.4;
+    
 
     return(
       <tr key={val.Id}>
@@ -169,7 +80,7 @@ function App() {
                 deleteProduct(val);
               }}
               className="btn btn-danger">
-                Eliminar
+                Delete
               </button>
           </div>
         </td>
@@ -222,35 +133,9 @@ function App() {
     setCost(Cost);
   };
 
-  const addToCart = (product) => {
-    const existingItem = cart.find((item) => item.id === product.id);
-    if (existingItem) {
-      setCart((prevCart) =>
-        prevCart.map((item) =>
-          item.id === product.id
-            ? { ...item, quantity: item.quantity + 1 }
-            : item
-        )
-      );
-    } else {
-      setCart((prevCart) => [
-        ...prevCart,
-        {
-          id: product.id,
-          product: product.product,
-          price: product.salePrice,
-          quantity: 1,
-        },
-      ]);
-    }
-  };
  
 
-  const handleVentaExitosa = (newInventory) => {
-    // Actualiza el inventario después de una venta exitosa
-    setProductList(newInventory);
-    
-  };
+
   const addProduct = async () => {
     const salePrice = parseFloat(cost) * 1.4;
     try {
@@ -318,7 +203,6 @@ function App() {
           <Route path="/" element={<LandingPage />} />
           <Route path="/inventory" element={<Inventory />} />
           <Route path="/sale" element={<Sale />} />
-          <Route path="/pos" element={<POS productList={productList} cart={cart} addToCart={addToCart} onVentaExitosa={handleVentaExitosa} />} />
         </Routes>
 
       <div className="card text-center">

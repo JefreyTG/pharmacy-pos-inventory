@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Axios from 'axios';
 import './LandingPage.css'
-import POS from './POS';
 
 const LandingPage = () => {
   const [searchTerm, setSearchTerm] = useState('');
@@ -64,8 +63,8 @@ const LandingPage = () => {
   return (
     <div className="landing-page">
       <header>
-        <h1>Pharmacy POS System</h1>
-        <p>Welcome to your trusted Pharmacy</p>
+        <h1>POS System</h1>
+        <p>Please search your Item</p>
       </header>
 
       <div className='search-products'>
@@ -118,7 +117,6 @@ const LandingPage = () => {
         )}
       </div>
 
-      <POS productList={searchResults} cart={cart} onVentaExitosa={getProducts} />
     </div>
   );
 };

@@ -4,7 +4,8 @@
   --mid-green: #53a8b6;
   --dark-blue: #142d4c;
   --light-green: #9fd3c7;
-  --light-gradient:linear-gradient(#9fd3c7, #142d4c );
+  --light-beige:#fcf4d9;
+  --light-gradient:linear-gradient(#fcf4d9, #142d4c );
   --light-gradient-2:linear-gradient(#bbe4e9, #53a8b6);
 }
 
@@ -17,11 +18,11 @@
 }
 
 div.container {
-  width: 100%;
-  max-width: 900px; /* Añadido un ancho máximo para dispositivos más grandes */
+  width: fit-content;
+  min-width: 850;
   height: fit-content;
   margin: 0%; /* Centrado y margen ajustado */
-  background: var(--light-gradient);
+  background: var(--light-beige                                                                                                                                    );
   border-radius: 10PX;
   padding-top: 10PX;
 }
@@ -30,9 +31,11 @@ h1,
 h2,
 h3 {
  
-  max-width: 400px; /* Añadido un ancho máximo para dispositivos más grandes */
+  max-width: fit-content; /* Añadido un ancho máximo para dispositivos más grandes */
   margin: 0 auto;
+  padding-left: ;
   text-align: center;
+  margin: 10px;
    /* Centrado */
 }
 
@@ -71,9 +74,14 @@ h3 {
 }
 
 .card-body .input-group-text {
+  width: fit-content;
+  min-width: 90px;
+  height: 40px;
   background-color: var(--light-green);
   font: 550 16px "Playfair Display", serif;
   color: var(--dark-blue);
+  border-radius: 10px;
+  margin-right: 10px;
 }
 
 button.cart-btn {
@@ -103,8 +111,11 @@ button.btn-success:hover {
 }
 
 button.btn-danger {
-  width: 100%;
-  background-color: red;
+  width: fit-content;
+  background-color: rgb(107, 37, 37);
+}
+input.form-control{
+  margin: 0px 10px 0px 0px;
 }
 
 .table {
@@ -118,6 +129,7 @@ button.btn-danger {
 
 .table th,
 .table td {
+  width: 105px;
   padding: 10px;
 }
 

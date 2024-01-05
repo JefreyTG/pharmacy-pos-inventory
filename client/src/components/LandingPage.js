@@ -1,14 +1,13 @@
-import React, { useState, useEffect } from 'react';
-import Axios from 'axios';
-import './LandingPage.css'
+import React, { useState, useEffect } from "react";
+import Axios from "axios";
+import "./LandingPage.css";
 
 const LandingPage = () => {
-  const [searchTerm, setSearchTerm] = useState('');
+  const [searchTerm, setSearchTerm] = useState("");
   const [searchResults, setSearchResults] = useState([]);
   const [cart, setCart] = useState([]);
-  const [totalSale, setTotalSale]= useState(0);
+  const [totalSale, setTotalSale] = useState(0);
   const [quantityInput, setQuantityInput] = useState(1);
-
 
   useEffect(() => {
     handleSearch();
@@ -16,19 +15,23 @@ const LandingPage = () => {
 
   const getProducts = async () => {
     try {
-      const response = await Axios.get('http://localhost:3001/pharmacy_inventory');
+      const response = await Axios.get(
+        "http://localhost:3001/pharmacy_inventory"
+      );
       setSearchResults(response.data?.data || []);
     } catch (error) {
-      console.error('Error fetching products:', error);
+      console.error("Error fetching products:", error);
     }
   };
 
   const handleSearch = async () => {
     try {
-      const response = await Axios.get(`http://localhost:3001/pharmacy_inventory?search=${searchTerm}`);
+      const response = await Axios.get(
+        `http://localhost:3001/pharmacy_inventory?search=${searchTerm}`
+      );
       setSearchResults(response.data || []);
     } catch (error) {
-      console.error('Error fetching products:', error);
+      console.error("Error fetching products:", error);
     }
   };
 
@@ -38,12 +41,14 @@ const LandingPage = () => {
       product: product.Product,
       price: product.SalePrice * quantityInput,
       quantity: quantityInput,
-    }
+    };
 
     setCart((prevCart) => [...prevCart, newItem]);
-    setTotalSale((prevTotal)=> prevTotal + newItem.price);
+    setTotalSale((prevTotal) => prevTotal + newItem.price);
 
-    alert(`Producto: ${newItem.product}\nCantidad: ${newItem.quantity}\nPrecio de Venta: $${newItem.price}`);
+    alert(
+      `Producto: ${newItem.product}\nCantidad: ${newItem.quantity}\nPrecio de Venta: $${newItem.price}`
+    );
     setQuantityInput(1);
   };
 
@@ -64,12 +69,12 @@ const LandingPage = () => {
     <div className="landing-page">
       <header>
         <h1>POS System</h1>
-        <p>Please search your Item</p>
+        
       </header>
 
-      <div className='search-products'>
-        <h2>Search Products:</h2>
-        <div className='input-div'>
+      <div className="search-products">
+        <h2>Search:</h2>
+        <div className="input-div">
           <input
             type="text"
             value={searchTerm}
@@ -82,15 +87,18 @@ const LandingPage = () => {
         <ul>
           {searchResults.map((product) => (
             <li key={product.Id}>
-              {product.Product} - Cantidad: {product.Amount} - Precio: ${product.SalePrice}
-              <div className='add-to-cart-container'>
+              {product.Product} - Cantidad: {product.Amount} - Precio: $
+              {product.SalePrice}
+              <div className="add-to-cart-container">
                 <input
-                  type='number'
+                  type="number"
                   min="1"
                   value={quantityInput}
-                  onChange={(e) => setQuantityInput(parseInt(e.target.value, 10) || 1)}
+                  onChange={(e) =>
+                    setQuantityInput(parseInt(e.target.value, 10) || 1)
+                  }
                 />
-                <button className='cart-btn' onClick={() => addToCart(product)}>
+                <button className="cart-btn" onClick={() => addToCart(product)}>
                   Add to Cart
                 </button>
               </div>
@@ -99,24 +107,30 @@ const LandingPage = () => {
         </ul>
       )}
 
-      <div className='shopping-cart'>
-        <h2>Shopping Cart:</h2>
+      <div className="shopping-cart">
+        <h2> Cart:</h2>
         <ul>
           {cart.map((item, index) => (
             <li key={index}>
               {item.product} - Cantidad: {item.quantity} - Precio: ${item.price}
-              <button className='cart-btn' onClick={() => removeFromCart(index)}>Remove</button>
+              <button
+                className="cart-btn"
+                onClick={() => removeFromCart(index)}
+              >
+                Remove
+              </button>
             </li>
           ))}
         </ul>
         {cart.length > 0 && (
           <div>
             <p>Total Sale: ${totalSale}</p>
-          <button className='cart-btn' onClick={procesarVenta}>Process Sale</button>
+            <button className="cart-btn" onClick={procesarVenta}>
+              Process Sale
+            </button>
           </div>
         )}
       </div>
-
     </div>
   );
 };

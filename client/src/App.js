@@ -1,13 +1,12 @@
 import "./App.css";
 import { useState, useEffect } from "react";
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Axios from "axios";
-import Swal from 'sweetalert2'
+import Swal from "sweetalert2";
 import "bootstrap/dist/css/bootstrap.min.css";
 import LandingPage from "./components/LandingPage";
-import Inventory from "./components/Inventory"
-import Sale from "./components/Sale"
-
+import Inventory from "./components/Inventory";
+import Sale from "./components/Sale";
 
 function App() {
   const [id, setId] = useState("");
@@ -18,7 +17,6 @@ function App() {
   const [productList, setProductList] = useState([]);
   const API_BASE_URL = "http://localhost:3001";
 
-
   useEffect(() => {
     // Función para obtener el inventario
     const fetchData = async () => {
@@ -26,38 +24,33 @@ function App() {
         const response = await Axios.get(`${API_BASE_URL}/pharmacy_inventory`);
         setProductList(response.data || []);
       } catch (error) {
-        console.error('Error al obtener el inventario:', error);
+        console.error("Error al obtener el inventario:", error);
       }
     };
 
-    
     fetchData();
   }, []);
 
-
   const salePrice = parseFloat(cost) * 1.4;
 
-
-  const getProducts=async()=>{
+  const getProducts = async () => {
     try {
-      const response= await Axios.get(`${API_BASE_URL}/pharmacy_inventory`);
+      const response = await Axios.get(`${API_BASE_URL}/pharmacy_inventory`);
       setProductList(response.data);
-    } catch(error){
-      console.error('Error al obtener inventario', error);
+    } catch (error) {
+      console.error("Error al obtener inventario", error);
     }
-  }
-   const clearFields=()=>{
-    setProduct('');
-    setAmount('');
-    setCost('');
-    setId('');
+  };
+  const clearFields = () => {
+    setProduct("");
+    setAmount("");
+    setCost("");
+    setId("");
     setEdit(false);
-};
+  };
 
   const ProductRow = ({ val, editProduct, deleteProduct }) => {
-    
-
-    return(
+    return (
       <tr key={val.Id}>
         <td>{val.Id}</td>
         <td>{val.Product}</td>
@@ -68,20 +61,22 @@ function App() {
           <div className="btn-group" role="group" aria-label="Basic example">
             <button
               type="button"
-              onClick={()=>{
+              onClick={() => {
                 editProduct(val);
               }}
-              className="btn btn-info">
-                Editar
-              </button>
-              <button 
+              className="btn btn-info"
+            >
+              Editar
+            </button>
+            <button
               type="button"
-              onClick={()=>{
+              onClick={() => {
                 deleteProduct(val);
               }}
-              className="btn btn-danger">
-                Delete
-              </button>
+              className="btn btn-danger"
+            >
+              Delete
+            </button>
           </div>
         </td>
       </tr>
@@ -120,10 +115,8 @@ function App() {
         }
       }
     });
-  }
+  };
 
-
-    
   const editProduct = (val) => {
     const { Id, Product, Amount, Cost } = val;
     setEdit(true);
@@ -132,9 +125,6 @@ function App() {
     setAmount(Amount);
     setCost(Cost);
   };
-
- 
-
 
   const addProduct = async () => {
     const salePrice = parseFloat(cost) * 1.4;
@@ -161,12 +151,10 @@ function App() {
         timer: 3000,
       });
 
-    
-      clearFields();   
+      clearFields();
       getProducts();
-    } catch(error){
+    } catch (error) {
       console.error("Error adding product:", error);
-
     }
   };
 
@@ -189,122 +177,125 @@ function App() {
       });
       clearFields();
       getProducts();
-    }catch(error){
+    } catch (error) {
       console.error("Error updating product:", error);
     }
   };
 
-
   return (
-    
     <Router>
       <div className="container">
-      <Routes>
+        <Routes>
           <Route path="/" element={<LandingPage />} />
           <Route path="/inventory" element={<Inventory />} />
           <Route path="/sale" element={<Sale />} />
         </Routes>
 
-      <div className="card text-center">
-        <div className="card-header">GESTOR DE INVENTARIO</div>
-        <div className="card-body">
-          <div className="input-group mb-3">
-            <span className="input-group-text" id="basic-addon1">
-              Producto:
-            </span>
-            <input
-              type="text"
-              onChange={(event) => {
-                setProduct(event.target.value);
-              }}
-              className="form-control"
-              value={product}
-              placeholder="Nombre del producto"
-              aria-label="Username"
-              aria-describedby="basic-addon1"
-            />
-          </div>
-
-          <div className="input-group mb-3">
-            <span className="input-group-text" id="basic-addon1">
-              Cantidad:
-            </span>
-            <input
-              type="number" value={amount}
-              onChange={(event) => {
-                setAmount(event.target.value);
-              }}
-              className="form-control"
-              placeholder="Cantidad"
-              aria-label="Username"
-              aria-describedby="basic-addon1"
-            />
-          </div>
-
-          <div className="input-group mb-3">
-            <span className="input-group-text" id="basic-addon1">
-              Costo:
-            </span>
-            <input
-              type="number" value={cost}
-              onChange={(event) => {
-                setCost(event.target.value);
-                }}              
-              className="form-control"
-              placeholder="Ingrese el valor de compra"
-              aria-label="Username"
-              aria-describedby="basic-addon1"
-            />
-          </div>
-
-          <div className="input-group mb-3">
-                <span className="input-group-text" id="basic-addon1">
-                  Precio sugerido de venta: ${salePrice}
-                </span>
-                
-          </div>
-
-        
-
-        </div>
-
-        <div className="card-footer text-muted">
-          {
-            edit?
-            <div>
-            <button className="btn btn-warning m-2" onClick={update}>Actualizar Producto </button><button className="btn btn-info m-2" onClick={clearFields}>Cancelar</button>
+        <div className="card text-center">
+          <div className="card-header">INVENTORY MANAGER</div>
+          <div className="card-body">
+            <div className="input-group mb-3">
+              <span className="input-group-text" id="basic-addon1">
+                Product:
+              </span>
+              <input
+                type="text"
+                onChange={(event) => {
+                  setProduct(event.target.value);
+                }}
+                className="form-control"
+                value={product}
+                placeholder="Nombre del producto"
+                aria-label="Username"
+                aria-describedby="basic-addon1"
+              />
             </div>
-            :<button className="btn btn-success" onClick={addProduct}>Añadir Producto al Inventario
-          </button>
 
-        }
-         
+            <div className="input-group mb-3">
+              <span className="input-group-text" id="basic-addon1">
+                Amount:
+              </span>
+              <input
+                type="number"
+                value={amount}
+                onChange={(event) => {
+                  setAmount(event.target.value);
+                }}
+                className="form-control"
+                placeholder="Cantidad"
+                aria-label="Username"
+                aria-describedby="basic-addon1"
+              />
+            </div>
+
+            <div className="input-group mb-3">
+              <span className="input-group-text" id="basic-addon1">
+                Cost:
+              </span>
+              <input
+                type="number"
+                value={cost}
+                onChange={(event) => {
+                  setCost(event.target.value);
+                }}
+                className="form-control"
+                placeholder="Ingrese el valor de compra"
+                aria-label="Username"
+                aria-describedby="basic-addon1"
+              />
+            </div>
+
+            <div className="input-group mb-3">
+              <span className="input-group-text" id="basic-addon1">
+                Sale Price: ${salePrice}
+              </span>
+            </div>
+          </div>
+
+          <div className="card-footer text-muted">
+            {edit ? (
+              <div>
+                <button className="btn btn-warning m-2" onClick={update}>
+                  Udate Product{" "}
+                </button>
+                <button className="btn btn-info m-2" onClick={clearFields}>
+                  Cancel
+                </button>
+              </div>
+            ) : (
+              <button className="btn btn-success" onClick={addProduct}>
+                Add Product
+              </button>
+            )}
+          </div>
         </div>
-      </div>
 
-      <table className="table table-striped">
-      <thead>
+        <table className="table table-striped">
+          <thead>
             <tr>
-              <th scope="col">#</th>
-              <th scope="col">Producto</th>
-              <th scope="col">Cantidad</th>
-              <th scope="col">Precio de compra</th>
-              <th scope="col">Precio de venta</th>
+              <th className="th-id" scope="col">#</th>
+              <th scope="col">Product</th>
+              <th scope="col">Amount</th>
+              <th scope="col">Purchase Price</th>
+              <th scope="col">Sale Price</th>
             </tr>
           </thead>
           <tbody>
             {productList.map((val) => (
-              <ProductRow key={val.Id} val={val} editProduct={editProduct} deleteProduct={deleteProduct} />
+              <ProductRow
+                key={val.Id}
+                val={val}
+                editProduct={editProduct}
+                deleteProduct={deleteProduct}
+              />
             ))}
           </tbody>
-      </table>
-    </div>
-</Router>
-
-)
-};
+        </table>
+      </div>
+    </Router>
+  );
+}
 
 export default App;
-
 
 //Fin

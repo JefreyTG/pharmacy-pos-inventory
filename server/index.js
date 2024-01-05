@@ -110,3 +110,29 @@ app.post("/sell", (req, res) => {
 app.listen(3001, () => {
   console.log("Corriendo en el puerto 3001");
 });
+
+app.delete("/delete/:productId", (req, res) => {
+  const productId = req.params.productId;
+
+  // Verifica que se proporcione el ID del producto
+  if (!productId) {
+    return res.status(400).json({ error: "Se requiere el ID del producto para eliminarlo" });
+  }
+
+  // Realiza la eliminación del producto en la base de datos
+  db.query("DELETE FROM inventory WHERE id=?", [productId], (err, result) => {
+    if (err) {
+      console.error("Error al borrar el producto:", err);
+      return res.status(500).json({ error: "Error al borrar el producto" });
+    }
+
+    // Después de la eliminación exitosa, devuelve el nuevo inventario
+    getInventory((inventoryErr, inventoryResult) => {
+      if (inventoryErr) {
+        return res.status(500).json({ error: "Error al obtener el inventario después de la eliminación" });
+      }
+
+      res.status(200).json(inventoryResult);
+    });
+  });
+});

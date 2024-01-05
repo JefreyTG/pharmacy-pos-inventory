@@ -4,76 +4,104 @@
   --mid-green: #53a8b6;
   --dark-blue: #142d4c;
   --light-green: #9fd3c7;
-  --light-beige:#fcf4d9;
-  --light-gradient:linear-gradient(#fcf4d9, #142d4c );
-  --light-gradient-2:linear-gradient(#bbe4e9, #53a8b6);
+  --light-beige: #fcf4d9;
+  --light-gradient: linear-gradient(#fcf4d9, #142d4c);
+  --light-gradient-2: linear-gradient(#bbe4e9, #53a8b6);
+  --linear-gradient-3: linear-gradient(#142d4c, #79c2d0); 
 }
-
 #root {
-  width: 100%;
+  width:fit-content;
   height: fit-content;
   padding: 10px;
   display: flex;
   align-items: flex-end;
 }
 
+html, body{
+  width: fit-content;
+}
 div.container {
   width: fit-content;
-  min-width: 850;
   height: fit-content;
-  margin: 0%; /* Centrado y margen ajustado */
-  background: var(--light-beige                                                                                                                                    );
+  margin: 0%;
   border-radius: 10PX;
-  padding-top: 10PX;
+  padding-top: 25PX;
+  background-image: url('../public/Images/background-image.jpg');
+  background-repeat: repeat-x, repeat-y; /* Se repite solo horizontalmente */
+  background-position: left top;
+  background-size: 100% auto;
 }
 
-h1,
+div.container h1{
+  margin-left: 180px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
 h2,
 h3 {
- 
-  max-width: fit-content; /* Añadido un ancho máximo para dispositivos más grandes */
-  margin: 0 auto;
-  padding-left: ;
+
+  max-width: fit-content;
+  /* Añadido un ancho máximo para dispositivos más grandes */
+  margin-top:10px;
+  padding-left: 10px;
   text-align: center;
   margin: 10px;
-   /* Centrado */
+  /* Centrado */
 }
 
 
 
-.search-products h2, .shopping-cart h2, .pos-container h2 {
+.search-products h2,
+.shopping-cart h2,
+.pos-container h2 {
 
   font: 300 33px "Playfair Display", serif;
   color: var(--dark-blue);
-  background: var(--light-gradient-2);  
+  background: var(--light-gradient-2);
   border-radius: 10px;
   margin-bottom: 5px;
-  margin: 0;
+  margin-top: 10px;
 }
 
 h3 {
-  max-width: 600px; /* Añadido un ancho máximo para dispositivos más grandes */
+  max-width: 600px;
+  /* Añadido un ancho máximo para dispositivos más grandes */
 }
 
-.container .card-header {
+.container div.card-header {
+  align-items: center;
+  width: fit-content;
   text-align: center;
-  font: 300 50px "Playfair Display", serif;
+  font: 300 2rem "Playfair Display", serif;
   color: var(--light-green);
   background: var(--dark-blue);
   border-radius: 10px;
   margin-bottom: 5px;
 }
 
-.card-text-center {
+div.card.text-center {
+  width: 450px;
+  border:2px;
+  background: var(--light-beige);
   color: var(--dark-blue);
+  padding: 10px 10px 10px ;
+  margin-bottom: 10px;
 }
 
-.card-body,
-.card-footer.text-muted {
-  background-color: var(--mid-blue);
+div.card-body {
+  margin-left: 20px;
+  width: 400px;
+  border-radius: 10px;
+  background: linear-gradient(#142d4c, #79c2d0);
+}
+div.card-footer.text-muted{align-self: center;
+  width: fit-content;
+  border-radius: 10px;
+  background: linear-gradient(#142d4c, #79c2d0);
 }
 
-.card-body .input-group-text {
+div.card-body .input-group-text {
   width: fit-content;
   min-width: 90px;
   height: 40px;
@@ -99,46 +127,62 @@ button.btn.btn-danger {
   border-color: var(--light-green);
 }
 
-button.btn-success,
+button.btn.btn-success,
 button.btn.btn-info {
   background-color: var(--light-green);
   color: var(--dark-blue);
 }
 
-button.btn-success:hover {
-  background-color: var(--light-gray);
-  color: var(--light-green);
+button.btn.btn-success:hover, button.btn.btn-info:hover {
+  background-color: var(--light-beige);
+  color: var(--mid-blue);
 }
 
 button.btn-danger {
   width: fit-content;
   background-color: rgb(107, 37, 37);
 }
-input.form-control{
+
+input.form-control {
   margin: 0px 10px 0px 0px;
 }
 
-.table {
-  width: 100%;
+tbody {
+  width: fit-content;
   table-layout: fixed;
   border-collapse: collapse;
   margin-top: 5px;
   justify-content: center;
   font-family: "Playfair Display", serif;
 }
-
-.table th,
-.table td {
-  width: 105px;
+table.table.table-striped{
+  width: fit-content;
+}
+table.table.table-striped th {
+  background-color: var(--light-green);
+  font-size: 1rem;
+  width:100px;
+  height: 20px;
   padding: 10px;
+  border-radius: 5px;
+  justify-content: space-around;
+  text-align: center;
+  align-items: center;
+  align-content: center;
 }
 
-.table thead th {
+
+ tr {
+  width: 600px;
   background-color: var(--light-green);
   color: var(--dark-blue);
   font-size: 1rem;
-  font-weight: 600;
-  border: 1px solid #ddd;
+  font-weight: 500;
+  border-radius: 5px;
+  justify-content: space-between;
+}
+.th-id{
+  width: 15px;
 }
 
 .td-buttons {
@@ -148,26 +192,4 @@ input.form-control{
 }
 
 /* Resto del CSS permanece igual */
-
-@media screen and (max-width: 768px) {
-  .container .card-header {
-    font-size: 24px;
-  }
-
-  .table thead th {
-    font-size: 16px;
-  }
-
-  .td-buttons {
-    font-size: 14px;
-    padding: 8px;
-  }
-
-  button.btn-edit,
-  button.btn-delete {
-    padding: 6px 12px;
-    font-size: 14px;
-  }
-}
-
 

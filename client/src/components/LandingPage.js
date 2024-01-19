@@ -52,12 +52,34 @@ const LandingPage = () => {
     setQuantityInput(1);
   };
 
-  const procesarVenta = () => {
-    alert(`Venta procesada con éxito. Total Sale: $${totalSale}`);
-    setCart([]);
-    setTotalSale(0);
-    getProducts();
+  const procesarVenta = async () => {
+    try {
+      // Create an array of product names and quantities from the cart
+      const saleItems = cart.map((item) => ({
+        product: item.product,
+        quantity: item.quantity,
+      }));
+  
+      // Make a POST request to the /sell endpoint with the sale items
+      await Axios.post('http://localhost:3001/sell', saleItems);
+  
+      // Show a success message to the user
+      alert('Venta procesada con éxito');
+  
+      // Clear the shopping cart and reset total sale amount
+      setCart([]);
+      setTotalSale(0);
+  
+      // Fetch the updated inventory
+      getProducts();
+    } catch (error) {
+      console.error('Error processing sale:', error);
+      // Show an error message to the user if the sale fails
+      alert('Error al procesar la venta');
+    }
   };
+  
+  
 
   const removeFromCart = (index) => {
     const removedItem = cart[index];

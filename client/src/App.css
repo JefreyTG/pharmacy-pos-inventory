@@ -9,89 +9,56 @@
   --light-gradient-2: linear-gradient(#bbe4e9, #53a8b6);
   --linear-gradient-3: linear-gradient(#142d4c, #79c2d0); 
 }
-#root {
-  width:fit-content;
-  height: fit-content;
-  padding: 10px;
-  display: flex;
-  align-items: flex-end;
-}
+
 
 html, body{
-  width: fit-content;
-}
-div.container {
-  width: fit-content;
+  width: 100%;
   height: fit-content;
+}
+
+div.container {
+  width: 100%;
+  height: fit-content;
+  display: flex;
+  flex-direction: column;
   margin: 0%;
-  border-radius: 10PX;
-  padding-top: 25PX;
-  background-image: url('../public/Images/background-image.jpg');
-  background-repeat: repeat-x, repeat-y; /* Se repite solo horizontalmente */
-  background-position: left top;
-  background-size: 100% auto;
-}
-
-div.container h1{
-  margin-left: 180px;
-  margin-top: 20px;
-  margin-bottom: 20px;
-}
-
-h2,
-h3 {
-
-  max-width: fit-content;
-  /* Añadido un ancho máximo para dispositivos más grandes */
-  margin-top:10px;
-  padding-left: 10px;
-  text-align: center;
-  margin: 10px;
-  /* Centrado */
-}
-
-
-
-.search-products h2,
-.shopping-cart h2,
-.pos-container h2 {
-
-  font: 300 33px "Playfair Display", serif;
-  color: var(--dark-blue);
-  background: var(--light-gradient-2);
-  border-radius: 10px;
-  margin-bottom: 5px;
-  margin-top: 10px;
-}
-
-h3 {
-  max-width: 600px;
-  /* Añadido un ancho máximo para dispositivos más grandes */
-}
-
-.container div.card-header {
+  align-content: center;
+  justify-content: center;
   align-items: center;
-  width: fit-content;
+  border-radius: 10PX;
+  padding: 25PX;
+  background-image: url('../public/Images/background-image.jpg');
+  background-size: cover;
+}
+div.card.text-center {
+  width: 90%;
+  height: fit-content;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: var(--light-beige);
+  padding: 30px;
+  margin: 20px;
+}
+
+div.card-header {
+  width: 80%;
+  align-items: center;
   text-align: center;
-  font: 300 2rem "Playfair Display", serif;
+  font-family:  "Playfair Display", serif;
+  font-size: 2rem;
+  font-weight: 600;
   color: var(--light-green);
   background: var(--dark-blue);
   border-radius: 10px;
-  margin-bottom: 5px;
+  margin: 15px;
 }
 
-div.card.text-center {
-  width: 450px;
-  border:2px;
-  background: var(--light-beige);
-  color: var(--dark-blue);
-  padding: 10px 10px 10px ;
-  margin-bottom: 10px;
-}
 
 div.card-body {
   margin-left: 20px;
-  width: 400px;
+  width: 60%;
+  margin: 20px;
   border-radius: 10px;
   background: linear-gradient(#142d4c, #79c2d0);
 }
@@ -146,6 +113,9 @@ button.btn-danger {
 input.form-control {
   margin: 0px 10px 0px 0px;
 }
+thead{
+  width: 80%;
+}
 
 tbody {
   width: fit-content;
@@ -156,15 +126,18 @@ tbody {
   font-family: "Playfair Display", serif;
 }
 table.table.table-striped{
-  width: fit-content;
+    width: 80%;
+    margin: 30px;
+    border-radius: 10px;
+ 
 }
 table.table.table-striped th {
+  width:fit-content;
+  height: fit-content;
   background-color: var(--light-green);
   font-size: 1rem;
-  width:100px;
-  height: 20px;
-  padding: 10px;
-  border-radius: 5px;
+  padding: 5px;
+  border-radius: 15px;
   justify-content: space-around;
   text-align: center;
   align-items: center;
@@ -172,24 +145,22 @@ table.table.table-striped th {
 }
 
 
- tr {
-  width: 600px;
-  background-color: var(--light-green);
+table.table.table-striped tr {
+  width:fit-content;
   color: var(--dark-blue);
   font-size: 1rem;
   font-weight: 500;
-  border-radius: 5px;
-  justify-content: space-between;
-}
-.th-id{
-  width: 15px;
-}
+  justify-content: space-between;}
+  
+table.table.table-striped td{
 
+  width: fit-content;
+  height: auto;
+}
 .td-buttons {
   text-align: center;
   font: 600 17px "Playfair Display", serif;
   border: 1px solid #dddddd;
 }
 
-/* Resto del CSS permanece igual */
 

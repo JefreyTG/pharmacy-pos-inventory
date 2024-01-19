@@ -73,39 +73,44 @@ app.post("/create", (req, res) => {
 
 
 app.post("/sell", (req, res) => {
-  const product = req.body.product;
-  const quantity = req.body.quantity;
+  const saleItems = req.body;
 
-  // Verifica si hay suficientes existencias para realizar la venta
-  db.query("SELECT * FROM inventory WHERE Product=?", [product], (err, result) => {
-    if (err) {
-      console.error("Error al obtener información del producto:", err);
-      res.status(500).send("Error al procesar la venta");
-    } else {
-      if (result.length === 0 || result[0].Amount < quantity) {
-        res.status(400).send("Producto no disponible o cantidad insuficiente");
-      } else {
-        // Realiza la venta y actualiza la cantidad en el inventario
-        const newQuantity = result[0].Amount - quantity;
-        db.query("UPDATE inventory SET Amount=? WHERE Product=?", [newQuantity, product], (err, updateResult) => {
-          if (err) {
-            console.error("Error al actualizar el inventario:", err);
-            res.status(500).send("Error al procesar la venta");
+  // Process each sale item
+  saleItems.forEach(async (saleItem) => {
+    const { product, quantity } = saleItem;
+
+    // Check if there are enough items in the inventory for the sale
+    const inventoryCheck = await new Promise((resolve) => {
+      db.query("SELECT * FROM inventory WHERE Product=?", [product], (err, result) => {
+        if (err) {
+          console.error("Error al obtener información del producto:", err);
+          resolve({ success: false, message: "Error al procesar la venta" });
+        } else {
+          if (result.length === 0 || result[0].Amount < quantity) {
+            resolve({ success: false, message: "Producto no disponible o cantidad insuficiente" });
           } else {
-            // Después de una venta exitosa, devuelve el nuevo inventario
-            getInventory((inventoryErr, inventoryResult) => {
-              if (inventoryErr) {
-                res.status(500).send("Error al obtener el inventario después de la venta");
+            // Deduct the sold quantity from the inventory
+            const newQuantity = result[0].Amount - quantity;
+            db.query("UPDATE inventory SET Amount=? WHERE Product=?", [newQuantity, product], (err, updateResult) => {
+              if (err) {
+                console.error("Error al actualizar el inventario:", err);
+                resolve({ success: false, message: "Error al procesar la venta" });
               } else {
-                res.status(200).send(inventoryResult);
+                resolve({ success: true, message: "Venta procesada con éxito" });
               }
             });
           }
-        });
-      }
+        }
+      });
+    });
+
+    // Check the result of the inventory check and respond accordingly
+    if (!inventoryCheck.success) {
+      res.status(400).send(inventoryCheck.message);
     }
   });
 });
+
 
 app.listen(3001, () => {
   console.log("Corriendo en el puerto 3001");
@@ -134,5 +139,47 @@ app.delete("/delete/:productId", (req, res) => {
 
       res.status(200).json(inventoryResult);
     });
+  });
+});
+
+app.put("/update", (req, res) => {
+  const { id, product, amount, cost, salePrice } = req.body;
+
+  // Validate that required fields are provided
+  if (!id || !product || !amount || !cost || !salePrice) {
+    return res.status(400).json({ error: "All fields are required for updating a product" });
+  }
+
+  // Check if the product with the given ID exists
+  db.query("SELECT * FROM inventory WHERE id=?", [id], (err, result) => {
+    if (err) {
+      console.error("Error checking product existence:", err);
+      return res.status(500).json({ error: "Error checking product existence" });
+    }
+
+    if (result.length === 0) {
+      return res.status(404).json({ error: "Product not found" });
+    }
+
+    // Update the product in the database
+    db.query(
+      "UPDATE inventory SET Product=?, Amount=?, Cost=?, SalePrice=? WHERE id=?",
+      [product, amount, cost, salePrice, id],
+      (updateErr, updateResult) => {
+        if (updateErr) {
+          console.error("Error updating product:", updateErr);
+          return res.status(500).json({ error: "Error updating product" });
+        }
+
+        // Optionally, you can fetch the updated inventory and send it as a response
+        getInventory((inventoryErr, inventoryResult) => {
+          if (inventoryErr) {
+            return res.status(500).json({ error: "Error fetching updated inventory" });
+          }
+
+          res.status(200).json(inventoryResult);
+        });
+      }
+    );
   });
 });
